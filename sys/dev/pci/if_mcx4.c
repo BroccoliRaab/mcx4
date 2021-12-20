@@ -26,3 +26,26 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#define MCX3_DRIVER_VERSION "v0.1.0"
+
+const struct pci_matchid mcx3_devices[] = {
+	{ PCI_VENDOR_MELLANOX, PCI_PRODUCT_BROADCOM_MT27500 }
+};
+
+struct cfattach bnx_ca = {
+	sizeof(struct mcx3_softc), mcx3_probe, mcx3_attach
+};
+
+struct cfdriver mcx3_cd = {
+	NULL, "mcx3", DV_IFNET
+};
+
+int    mcx3_probe( struct device *, void *, void *);
+void   mcx3_attach(struct device *, struct device *, void *);
+
+int
+mcx3_probe(struct device *parent, void *match, void *aux)
+{
+	return pci_matchbyid((struct pci_attach_args *)aux, mcx3_device
+		nitems(mcx3_devices));
+}
