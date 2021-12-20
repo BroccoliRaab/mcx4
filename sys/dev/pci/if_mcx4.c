@@ -49,3 +49,10 @@ mcx4_probe(struct device *parent, void *match, void *aux)
 	return pci_matchbyid((struct pci_attach_args *)aux, mcx4_device
 		nitems(mcx4_devices));
 }
+
+void
+mcx4_attach(struct device *parent, struct device *self, void *aux)
+{
+	struct pci_attach_args *pa = aux;
+	struct mcx4_softc *sc = (struct mcx_softc *) self;
+}
