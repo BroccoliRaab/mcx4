@@ -32,13 +32,26 @@ const struct pci_matchid mcx4_devices[] = {
 	{ PCI_VENDOR_MELLANOX, PCI_PRODUCT_MELLANOX_MT27500 }
 };
 
-struct cfattach mcx4_ca = {
-	sizeof(struct mcx4_softc), mcx4_probe, mcx4_attach
-};
+struct mcx4_softc = {
+	struct device		 sc_dev;
+	struct arpcom		 sc_ac;
+	struct ifmedia		 sc_media;
+	
+	bus_dma_tag_t		 sc_dmat;
+	bus_space_tag_t		 sc_memt;
+	bus_space_handle_t	 sc_memh;
+	bus_size_t		 sc_mems;
+}
 
 struct cfdriver mcx4_cd = {
 	NULL, "mcx4", DV_IFNET
 };
+
+struct cfattach mcx4_ca = {
+	sizeof(struct mcx4_softc), mcx4_probe, mcx4_attach
+};
+
+
 
 int    mcx4_probe( struct device *, void *, void *);
 void   mcx4_attach(struct device *, struct device *, void *);
