@@ -26,6 +26,34 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+
+#include "bpfilter.h"
+#include "vlan.h"
+
+#include <sys/param.h>
+#include <sys/systm.h>
+#include <sys/sockio.h>
+#include <sys/mbuf.h>
+#include <sys/malloc.h>
+#include <sys/kernel.h>
+#include <sys/device.h>
+#include <sys/socket.h>
+#include <sys/timeout.h>
+
+#include <net/if.h>
+#include <net/if_media.h>
+
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <netinet/if_ether.h>
+#include <netinet/tcp.h>
+#include <netinet/udp.h>
+
+#include <dev/pci/pcireg.h>
+#include <dev/pci/pcivar.h>
+#include <dev/pci/pcidevs.h>
+
+
 #define MCX4_DRIVER_VERSION "v0.1.0"
 
 const struct pci_matchid mcx4_devices[] = {
